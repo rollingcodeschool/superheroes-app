@@ -1,5 +1,6 @@
 //Traigo de localStorage los datos si los hay
 let heroes = JSON.parse(localStorage.getItem("heroes")) || [];
+let heroe = {};
 
 //Capturo cada elemento del formulario de registro
 let alias = document.querySelector("#aliasText");
@@ -66,6 +67,8 @@ function cargarTabla() {
                 <td>${heroe.equipo}</td>
                 <td>
                 <button class="btn btn-warning" onclick='verHeroe(${index})'>Ver</button>
+                <button class="btn btn-info" onclick='irModif(${index})'>Modif</button>
+                <button class="btn btn-danger" onclick='borrarHeroe(${index})'>X</button>
                 </td>
                
 `;
@@ -76,14 +79,52 @@ function cargarTabla() {
 }
 
 function verHeroe(id) {
-  console.log(id);
+  // console.log(id);
+  heroe = heroes[id];
 
-  document.querySelector("#title_modal").innerText = heroes[id].alias;
-  document.querySelector(".card-title").innerText = heroes[id].nombre;
-  document.querySelector("#imagen_heroe").src = heroes[id].imagen;
-  document.querySelector("#text_poder").innerText = heroes[id].poder;
-  document.querySelector("#text_equipo").innerText = heroes[id].equipo;
+  document.querySelector("#title_modal").innerText = heroe.alias;
+  document.querySelector(".card-title").innerText = heroe.nombre;
+  document.querySelector("#imagen_heroe").src = heroe.imagen;
+  document.querySelector("#text_poder").innerText = heroe.poder;
+  document.querySelector("#text_equipo").innerText = heroe.equipo;
   $("#heroeModal").modal("show");
+}
+
+function borrarHeroe(id) {
+  heroe = heroes[id];
+
+  let validar = confirm(`Está seguro que quiere borrar a ${heroe.alias}`);
+
+  if (validar) {
+    heroes.splice(id, 1);
+    localStorage.setItem("heroes", JSON.stringify(heroes));
+
+    alert(`Se borró a ${heroe.alias}`);
+    cargarTabla();
+  }
+}
+
+function irModif(indice) {
+  heroe = heroes[indice];
+  // console.log(heroe);
+  document.querySelector("#modif_title").innerText = heroe.alias;
+  document.querySelector("#nombreModif").value = heroe.nombre;
+  document.querySelector("#poderModif").value = heroe.poder;
+  document.querySelector("#equipoModif").value = heroe.equipo;
+  document.querySelector("#imagenModif").value = heroe.imagen;
+
+  $("#modifModal").modal("show");
+}
+
+function handleChange(e) {
+  console.log(e.target.value);
+
+  heroe = {
+    ...heroe,
+    [e.target.name]: e.target.value,
+  };
+
+  console.log(heroe);
 }
 
 if (cuerpoTabla) {
