@@ -66,9 +66,15 @@ function cargarTabla() {
                 <td>${heroe.poder}</td>
                 <td>${heroe.equipo}</td>
                 <td>
-                <button class="btn btn-warning" onclick='verHeroe(${index})'>Ver</button>
-                <button class="btn btn-info" onclick='irModif(${index})'>Modif</button>
-                <button class="btn btn-danger" onclick='borrarHeroe(${index})'>X</button>
+                <button class="btn btn-warning" onclick='verHeroe(${index})'>
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-info" onclick='irModif(${index})'>
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-danger" onclick='borrarHeroe(${index})'>
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
                 </td>
                
 `;
@@ -117,14 +123,33 @@ function irModif(indice) {
 }
 
 function handleChange(e) {
-  console.log(e.target.value);
+  // console.log(e.target.value);
 
   heroe = {
     ...heroe,
     [e.target.name]: e.target.value,
   };
 
-  console.log(heroe);
+  // console.log(heroe);
+}
+
+//funcion para actualizar heroe
+function updateHeroe(e) {
+  e.preventDefault(); //para que no se refresque la pantalla con el submit
+
+  //Obtener posicion del heroe en el arreglo
+  let index = heroes.findIndex(function (item) {
+    return item.alias === heroe.alias;
+  });
+
+  //modificar solamente el heroe
+  heroes.splice(index, 1, heroe);
+
+  localStorage.setItem("heroes", JSON.stringify(heroes));
+  cargarTabla();
+
+  //cerrar modal
+  $("#modifModal").modal("hide");
 }
 
 if (cuerpoTabla) {

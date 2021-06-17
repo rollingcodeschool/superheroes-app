@@ -16,6 +16,10 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
 
     <title>Heroes</title>
   </head>
@@ -54,7 +58,7 @@
     </header>
 
     <main>
-      <div class="container">
+      <div class="container animate__animated animate__fadeIn">
         <div class="row mt-5">
           <div class="col">
             <h1>Tabla de Héroes</h1>
@@ -159,7 +163,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form onsubmit="updateHeroe(event)">
               <div class="form-group">
                 <label>Nombre</label>
                 <input
@@ -230,6 +234,8 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-- Libreria de font-awesome -->
+    <script src="https://use.fontawesome.com/a79dcfd0b0.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
